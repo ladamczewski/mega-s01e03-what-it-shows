@@ -52,8 +52,19 @@ Stara [procedura triage](/kb/triage/dedupe) poleca scalanie po tytule. Jej data 
 
 Ten sam tytuł może oznaczać inne przyczyny. Inne tytuły i kanały mogą opisywać tę samą przyczynę. Nieznany klient oznacza brak danych, a nie zgodę na scalenie.
 
+## Aktualizacja engineering — 5 października 2026
+
+Po zaakceptowaniu zgłoszeń kurs udostępnił aktualizację engineering na stronie S01E03: #4471 zamknięto 5 października 2026.
+
+- Parser: **FIXED** — `fix(dates): parse dd/mm for eu locales`. [Issue #1](https://github.com/ladamczewski/mega-s01e03-what-it-shows/issues/1) zamknięte jako **Completed**; historyczny zakres pozostaje 379 unikalnych raportów.
+- Podpowiedź: **WON'T FIX** — `booking-v3 form retired`. [Issue #2](https://github.com/ladamczewski/mega-s01e03-what-it-shows/issues/2) zamknięte jako **Not planned**, ponieważ formularz wycofano. Nie jest to naprawa podpowiedzi ani duplikat parsera; historyczny zakres pozostaje 33 unikalne raporty.
+
+Tabela powyżej odtwarza eksport sprzed tej aktualizacji: jej komunikat o braku osobnego ticketu dla hint opisuje historyczne scalenie, nie aktualny stan naszych issues. Statusy zamknięcia wynikają z rozstrzygnięcia engineering, a nie z nowych testów produktu wykonanych przez autora tej strony. Pięć nietypowych raportów pozostaje odnotowanym ograniczeniem eksportu; nie dopisujemy im niepotwierdzonej diagnozy.
+
+Źródło aktualizacji: [strona kursu S01E03](https://hq.mega.dev/challenges/what-it-shows), odczyt 29 października 2026.
+
 ## Aktualność
 
-To przegląd eksportu z 4 października 2026 wykonany 29 października 2026. Nie jest bieżącym odczytem kolejki. Wsparcie nadal pracuje; przed zamknięciem zgłoszeń sprawdź nowe raporty i wyniki testów, następnie ponownie uruchom audyt. Wyrenderowany HTML jest zapisem konkretnego wykonania, nie usługą aktualizowaną na żywo.
+To przegląd eksportu z 4 października 2026 wykonany 29 października 2026. Nie jest bieżącym odczytem kolejki. Wsparcie nadal pracuje; przed ponownym użyciem liczb sprawdź nowe raporty i wyniki testów, następnie ponownie uruchom audyt. Wyrenderowany HTML jest zapisem konkretnego wykonania, nie usługą aktualizowaną na żywo.
 
 <RenderStamp {signature} />
