@@ -1,0 +1,55 @@
+name: Build and verify knowledge base
+on:
+  push:
+    paths:
+      - source-bundle.json
+      - support-kb/src/**
+      - support-kb/scripts/**
+      - support-kb/package.json
+      - support-kb/vite.config.js
+      - .github/workflows/build-kb.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: kb-build
+  cancel-in-progress: false
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Download original public course export
+        run: |
+          curl --fail --location --silent --show-error https://hq.mega.dev/media/what-it-shows/kb-export-267efc5e.zip -o /tmp/kb-export.zip
+          unzip -n /tmp/kb-export.zip
+      - name: Extract approved public source files
+        run: |
+          node --input-type=module <<'JS'
+          import fs from 'node:fs';
+          import path from 'node:path';
+          const files = JSON.parse(fs.readFileSync('source-bundle.json', 'utf8'));
+          for (const [name, text] of Object.entries(files)) {
+            if (!name.startsWith('support-kb/') || name.includes('..') || typeof text !== 'string') throw new Error('Unsafe bundle path');
+            if (fs.existsSync(name)) continue;
+            fs.mkdirSync(path.dirname(name), { recursive: true });
+            fs.writeFileSync(name, text);
+          }
+          JS
+      - name: Install build tools and render actual Svelte pages
+        working-directory: support-kb
+        run: |
+          if test -f package-lock.json; then npm ci; else npm install; fi
+          npm run build
+      - name: Save source, lockfile and verified HTML
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add support-kb
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Render and verify signed knowledge base [skip ci]"
+          git push
