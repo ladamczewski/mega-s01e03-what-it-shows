@@ -4,7 +4,7 @@ title: '#4471 — dwie przyczyny pod jednym zgłoszeniem'
 owner: ladamczewski
 status: reviewed
 reviewed: '2026-10-29'
-signature: 'ladamczewski / MEGA.dev S01E03 / 2026-10-29'
+signature: 'v1.eyJzdG9yeSI6Im9mZiIsInN1YiI6IjI4MDIiLCJhdWQiOiJjaGFsbGVuZ2U6d2hhdC1pdC1zaG93cyIsImlhdCI6MTc5MzMwNjI2MSwiZXhwIjoxNzkzMzkyNjYxfQ.JUXPVS4oiSCx_9TotMMq8Z0thGu9RNaJ6Jd_Vz1rzlk'
 ---
 
 <script>
