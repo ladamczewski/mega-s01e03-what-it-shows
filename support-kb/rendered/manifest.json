@@ -1,0 +1,31 @@
+{
+  "generatedAt": "2026-10-29T20:23:15.684Z",
+  "renderer": "mdsvex + Svelte server render, bundled with Vite",
+  "pages": [
+    {
+      "source": "/src/routes/kb/+page.svx",
+      "html": "rendered/kb/index.html"
+    },
+    {
+      "source": "/src/routes/kb/decisions/0001-dedupe-by-subject/+page.svx",
+      "html": "rendered/kb/decisions/0001-dedupe-by-subject/index.html"
+    },
+    {
+      "source": "/src/routes/kb/decisions/0002-dedupe-by-cause/+page.svx",
+      "html": "rendered/kb/decisions/0002-dedupe-by-cause/index.html"
+    },
+    {
+      "source": "/src/routes/kb/incidents/4471-review/+page.svx",
+      "html": "rendered/kb/incidents/4471-review/index.html"
+    },
+    {
+      "source": "/src/routes/kb/incidents/4471/+page.svx",
+      "html": "rendered/kb/incidents/4471/index.html"
+    },
+    {
+      "source": "/src/routes/kb/triage/dedupe/+page.svx",
+      "html": "rendered/kb/triage/dedupe/index.html"
+    }
+  ],
+  "verifiedDeskRef": "DR-HK89-E4SF"
+}

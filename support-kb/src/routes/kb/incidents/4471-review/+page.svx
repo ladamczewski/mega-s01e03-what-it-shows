@@ -1,0 +1,59 @@
+---
+layout: runbook
+title: '#4471 — dwie przyczyny pod jednym zgłoszeniem'
+owner: ladamczewski
+status: reviewed
+reviewed: '2026-10-29'
+signature: 'ladamczewski / MEGA.dev S01E03 / 2026-10-29'
+---
+
+<script>
+  import CauseTable from '#lib/kb/CauseTable.svelte';
+  import QueueTimeline from '#lib/kb/QueueTimeline.svelte';
+  import DedupeExplorer from '#lib/kb/DedupeExplorer.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+</script>
+
+## Wniosek
+
+Historyczne [#4471](/kb/incidents/4471) opisuje jeden błąd, ale wykonanie logiki eksportu pokazuje dwie przyczyny. Naprawienie parsera nie naprawi podpowiedzi formularza. Poniższe liczby oblicza oryginalny komponent z danych przy renderowaniu.
+
+<CauseTable ticket={4471} />
+
+## Osobne zgłoszenia
+
+- [Parser — issue #1](https://github.com/ladamczewski/mega-s01e03-what-it-shows/issues/1): wspólny parser traktuje wejście jako MM/DD, choć locale klienta wymaga DD/MM. Przykład R-41203: rezerwacja na 2 grudnia daje zaproszenie na 12 lutego. Naprawa: jawny format zgodny z locale klienta i jednoznaczny transport daty.
+- [Podpowiedź — issue #2](https://github.com/ladamczewski/mega-s01e03-what-it-shows/issues/2): booking-v3 pokazuje MM/DD/YYYY, lecz formularz odczytuje dane zgodnie z locale klienta day-first. Dotyczy kanału form; app/email tego samego klienta nie są automatycznie tym samym problemem. Naprawa: podpowiedź, walidacja i interpretacja muszą mieć ten sam format.
+
+Każde zgłoszenie podaje liczbę unikalnych raportów i kryteria sprawdzenia naprawy. Nie należy scalać tych problemów tylko dlatego, że oba dają złą datę.
+
+## Jak liczyć i klasyfikować
+
+Eksport stronicowany ma nakładające się strony. Najpierw `uniqueById`, następnie filtr `mergedInto === 4471`. Klient pochodzi z katalogu plików tenants; `tenantOf` i `causeOf` wykorzystują jego locale, wersję formularza oraz kanał raportu. `browserLocale` i `intakeTag` są poszlakami, nie źródłem prawdy o przyczynie. Nie grupujemy po słowach calendar, booking czy appointment. Pełną listę ID dla każdego issue zapisuje odtwarzalny audyt.
+
+<Callout>
+Tabela odtwarza klasyfikację kodu, nie zastępuje diagnozy każdego raportu. Zgłoszenia odczytane jako przesunięcie o dzień są oznaczone pod tabelą.
+</Callout>
+
+R-41202, R-41209, R-41236, R-41344 i R-41620 należą w kodzie do parsera, ale ich treść nie potwierdza zamiany miesiąca z dniem. Wymagają weryfikacji; nie tworzymy na tej podstawie fikcyjnej diagnozy stref czasowych.
+
+## Co pokazuje kolejka
+
+<QueueTimeline ticket={4471} />
+
+Data przyjęcia nie jest datą scalenia: od kwietnia zgłoszenia napływały przed dużą partią scaleń w lipcu. Wzrost liczby scaleń nie oznacza sam w sobie wzrostu liczby nowych usterek w tym tygodniu.
+
+## Nowa reguła pracy
+
+Stara [procedura triage](/kb/triage/dedupe) poleca scalanie po tytule. Jej data reviewed jest przestarzała; nowsza data historycznej strony incydentu nie potwierdza poprawności tej reguły. Przyjmujemy [decyzję 0002](/kb/decisions/0002-dedupe-by-cause): scalać po potwierdzonej przyczynie, nie opisie objawu. Nie nadpisujemy zaakceptowanej decyzji 0001.
+
+<DedupeExplorer />
+
+Ten sam tytuł może oznaczać inne przyczyny. Inne tytuły i kanały mogą opisywać tę samą przyczynę. Nieznany klient oznacza brak danych, a nie zgodę na scalenie.
+
+## Aktualność
+
+To przegląd eksportu z 4 października 2026 wykonany 29 października 2026. Nie jest bieżącym odczytem kolejki. Wsparcie nadal pracuje; przed zamknięciem zgłoszeń sprawdź nowe raporty i wyniki testów, następnie ponownie uruchom audyt. Wyrenderowany HTML jest zapisem konkretnego wykonania, nie usługą aktualizowaną na żywo.
+
+<RenderStamp {signature} />

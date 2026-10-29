@@ -1,0 +1,29 @@
+---
+layout: runbook
+title: '0002 — scalanie po przyczynie, nie po tytule'
+owner: ladamczewski
+status: accepted
+reviewed: '2026-10-29'
+signature: 'ladamczewski / MEGA.dev S01E03 / 2026-10-29'
+---
+
+<script>
+  import DedupeExplorer from '#lib/kb/DedupeExplorer.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+## Kontekst
+
+Przegląd #4471 pokazał, że podobne objawy scalono mimo różnych mechanizmów. Ten zapis zastępuje regułę z decyzji 0001; zaakceptowany zapis historyczny pozostaje bez zmian.
+
+## Decyzja
+
+Scalamy wyłącznie raporty o tej samej potwierdzonej przyczynie. W tym eksporcie stosujemy `tenantOf`, `causeOf` i `sameCause`: locale klienta, wersję formularza oraz kanał. Tytuł, locale przeglądarki i tag intake nie rozstrzygają. Gdy brak klienta w katalogu lub diagnoza jest niepewna, pozostawiamy raport do triage.
+
+<DedupeExplorer />
+
+## Konsekwencje
+
+Więcej czytania na wejściu, lecz osobne zadania dla parsera i podpowiedzi. Liczymy unikalne ID po usunięciu nakładających się stron eksportu. Zachowujemy powiązania z #4471, dowody i wyjątki wymagające diagnozy. Procedura dotyczy tego eksportu; dla innych produktów potwierdzamy ich mechanizm, nie dopasowujemy ich na siłę do dwóch kategorii tego incydentu.
+
+<RenderStamp {signature} />
